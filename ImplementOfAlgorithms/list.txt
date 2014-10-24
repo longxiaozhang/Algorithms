@@ -9,13 +9,49 @@ struct Node *left;
 struct Node *right;
 }
 
-struct Node *head = proot;
-void doubleLinkTree(Node *root){
-if(root->left == NULL)
-	doubleLinkTree(root->left);
-head = root;
+void mkTreeNode(Node *root,int val)
+{
+	Node *p_node = new Node();
+	p_node->data = val;
+	if(NULL == root) {
+		root = p_node;
+	}
 
+	while(root != NULL) {
+		if(root->data == val)
+			return;
+		if (root->data > val)
+			mkTreeNode(root->left,val);
+		else
+			mkTreeNode(root->right,val);
+	}
+}
+struct Node *root = NULL;
+struct Node *doubleList = NULL;
+void doubleLinkTree(Node *pCurNode){
+if (pCurNode->left != NULL)
+	doubleLinkTree(pCurNode->left);
+
+//if (NULL == pCurNode) return ;
+
+pCurNode->left = doubleList;
+if(NULL != doubleList)
+	doubleList->right = pCurNode;
+
+doubleList = pCurNode;
+
+if(pCurNode->right != NULL)
+	doubleLinkTree(pCurNode->right);
+}
+
+main()
+{
+Node* root = NULL;
+mkTree();
+if(NULL == root)
+	doubleLinkTree(root);
 
 }
-2.
 
+
+2.红黑树和平衡二叉树
